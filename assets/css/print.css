@@ -1,0 +1,20 @@
+/* =====================================================================
+   QueueEase - Print stylesheet (reports, tickets)
+   File: assets/css/print.css  (loaded with media="print")
+   ===================================================================== */
+body { background: #fff !important; color: #000; font-size: 12px; }
+.sidebar, .topbar, .app-footer, .public-nav, .public-footer, .no-print,
+.filter-bar, .btn, .pagination, .alert, .sidebar-backdrop { display: none !important; }
+.main-area { margin: 0 !important; }
+.content, .public-main { padding: 0 !important; max-width: none !important; }
+.card, .stat-card, .ticket-card { box-shadow: none !important; border: 1px solid #999 !important; break-inside: avoid; }
+.stats-grid { grid-template-columns: repeat(4, 1fr) !important; }
+.grid-2 { grid-template-columns: 1fr 1fr !important; }
+.table th { background: #eee !important; color: #000; }
+.table th, .table td { border: 1px solid #999 !important; padding: 4px 6px !important; }
+.badge { border: 1px solid #999; background: none !important; color: #000 !important; }
+.badge::before { display: none; }
+a { color: #000; text-decoration: none; }
+.chart-box { height: 220px !important; }
+.ticket-top { background: none !important; color: #000 !important; border-bottom: 1px solid #000; }
+@page { margin: 14mm; }

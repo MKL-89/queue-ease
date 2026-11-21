@@ -1,0 +1,246 @@
+=====================================================================
+  QueueEase - Digital Queue Management System
+  HOW TO INSTALL AND RUN THE SYSTEM
+=====================================================================
+
+This guide explains, step by step, what you need to install and how
+to get the system running on a Windows computer. It takes about
+10 to 15 minutes the first time.
+
+
+---------------------------------------------------------------------
+1. WHAT YOU NEED TO INSTALL
+---------------------------------------------------------------------
+
+  a) XAMPP (free) - REQUIRED
+     XAMPP gives you the web server (Apache), PHP and the MySQL /
+     MariaDB database in one package.
+       - Download:  https://www.apachefriends.org
+       - Choose the Windows version with PHP 8.0 or newer
+         (PHP 8.2 or 8.3 is recommended).
+       - Install it to the default folder:  C:\xampp
+       - During installation you only need: Apache, MySQL, PHP
+         and phpMyAdmin (they are ticked by default).
+
+  b) A modern web browser - REQUIRED
+     Google Chrome, Microsoft Edge or Mozilla Firefox.
+
+  c) Nothing else.
+     No internet connection is needed to run the system. The fonts,
+     charts and QR codes are all included in the project folder.
+
+  Computer: Windows 10 or 11, any normal laptop (4 GB RAM is enough).
+
+
+---------------------------------------------------------------------
+2. COPY THE PROJECT FOLDER
+---------------------------------------------------------------------
+
+  1. Unzip / copy the project folder you received.
+  2. Rename the folder to:   queueease
+     (short name, no spaces - this keeps the web address simple).
+  3. Move it into the XAMPP "htdocs" folder, so you end up with:
+
+        C:\xampp\htdocs\queueease\index.php
+        C:\xampp\htdocs\queueease\login.php
+        C:\xampp\htdocs\queueease\database\dqms_db.sql
+        ... and the other files and folders
+
+     Make sure index.php is directly inside "queueease", and not
+     inside another folder such as  queueease\queueease\index.php
+
+
+---------------------------------------------------------------------
+3. START XAMPP
+---------------------------------------------------------------------
+
+  1. Open the "XAMPP Control Panel" (Start menu > XAMPP).
+  2. Click "Start" next to  Apache.
+  3. Click "Start" next to  MySQL.
+  4. Both names should turn GREEN.
+
+  If one of them stays red, see "TROUBLESHOOTING" at the end.
+
+
+---------------------------------------------------------------------
+4. CREATE THE DATABASE (first time only)
+---------------------------------------------------------------------
+
+  1. In your browser open:   http://localhost/phpmyadmin
+  2. Click the "Import" tab at the top.
+  3. Click "Choose File" and select:
+         C:\xampp\htdocs\queueease\database\dqms_db.sql
+  4. Scroll down and click "Import" (or "Go").
+     You should see a green message saying the import finished.
+     This creates a database called  dqms_db  with all the tables
+     and the default accounts. You do NOT need to create the
+     database yourself - the file does it.
+
+  5. (Optional but recommended for a demonstration)
+     Import a second file the same way:
+         C:\xampp\htdocs\queueease\database\sample_data.sql
+     It adds one week of example tickets and ratings so the
+     dashboard charts and reports have something to show.
+     These example tickets are marked "DEMO-".
+
+  NOTE: Importing dqms_db.sql again later RESETS the system
+  (it deletes dqms_db and creates it fresh). It does not touch
+  any other database on the computer.
+
+
+---------------------------------------------------------------------
+5. OPEN THE SYSTEM
+---------------------------------------------------------------------
+
+  In your browser go to:
+
+        http://localhost/queueease/
+
+  You should see the QueueEase home page.
+
+  Default login accounts (from the installation data):
+
+    Role            Email                         Password
+    -------------   ---------------------------   ------------
+    Administrator   admin@queueease.local         Admin@123
+    Staff           grace@queueease.local         Staff@123
+    Staff           brian@queueease.local         Staff@123
+    Staff           faith@queueease.local         Staff@123
+    Staff           kevin@queueease.local         Staff@123
+    Customer        customer@queueease.local      Customer@123
+
+  Change these passwords if the system will be used by real people.
+
+
+---------------------------------------------------------------------
+6. QUICK TOUR (try this to see everything working)
+---------------------------------------------------------------------
+
+  1. Open the LIVE DISPLAY in a new tab:
+        http://localhost/queueease/public/display.php
+     Click "Voice off" once to switch voice announcements ON
+     (browsers only allow sound after you click).
+
+  2. In another tab open the home page and click "Get a Ticket".
+     Choose "Medical Consultation", type a name and phone number.
+     You get a ticket such as MED001 and a tracking code.
+
+  3. In another browser (or a private/incognito window) log in as
+        brian@queueease.local / Staff@123
+     Click "Call Next". The live display shows and announces the
+     ticket, and the customer's ticket page changes to
+     "It is your turn!".
+     Then try Recall, Start Service and Complete Service.
+     Keyboard shortcuts on the staff console:
+        N = call next, R = recall, S = start, C = complete, K = skip
+
+  4. Log in as admin@queueease.local / Admin@123 to see the
+     dashboard, All Tickets (with CSV export), Reports
+     (printable), Activity Logs, and to manage services,
+     counters, staff and customers.
+
+  5. The sun/moon button at the top switches light and dark mode.
+
+
+---------------------------------------------------------------------
+7. ALTERNATIVE: RUN WITHOUT APACHE (if port 80 is busy)
+---------------------------------------------------------------------
+
+  If Apache will not start (another program is using port 80), or
+  Apache is already running another website, you can still run
+  QueueEase with PHP's own small web server:
+
+  1. Start only MySQL in the XAMPP Control Panel.
+  2. Do step 4 (create the database) if not done yet.
+  3. Double-click the file   start_server.bat   in the project
+     folder. A black window opens and the browser opens at:
+
+        http://localhost:8080
+
+  4. Keep the black window open while you use the system.
+     Close it to stop the system.
+
+  (The project folder can be anywhere for this method, for example
+  on the Desktop. start_server.bat looks for PHP in C:\xampp\php.)
+
+
+---------------------------------------------------------------------
+8. USING IT FROM A PHONE ON THE SAME WI-FI (optional)
+---------------------------------------------------------------------
+
+  1. Find the computer's IP address: open Command Prompt, type
+        ipconfig
+     and look for "IPv4 Address", for example 192.168.1.20
+  2. With Apache running, on the phone open:
+        http://192.168.1.20/queueease/
+  3. If the phone cannot connect, allow "Apache HTTP Server" through
+     Windows Defender Firewall (Private networks).
+  The QR code on each ticket then opens on the phone as well.
+
+
+---------------------------------------------------------------------
+9. SETTINGS (optional)
+---------------------------------------------------------------------
+
+  Open  config\config.php  in Notepad (or VS Code) to change:
+    - INSTITUTION_NAME   the name shown on the display and pages
+    - APP_TIMEZONE       default 'Africa/Nairobi'
+    - DB_USER / DB_PASS  only if your MySQL has a password
+                         (XAMPP default: user root, empty password)
+    - DB_PORT            only if MySQL runs on a port other than 3306
+
+
+---------------------------------------------------------------------
+10. TROUBLESHOOTING
+---------------------------------------------------------------------
+
+  PROBLEM: Apache will not start (stays red), "Port 80 in use".
+  FIX:     Another program is using port 80 (often Skype, IIS or
+           VMware). Close that program, or use the method in
+           section 7 (start_server.bat, port 8080).
+
+  PROBLEM: MySQL will not start, "Port 3306 in use".
+  FIX:     Another MySQL is already running. Close it, or in XAMPP
+           click Config > my.ini for MySQL and change the port, then
+           put the same port in DB_PORT in config\config.php.
+
+  PROBLEM: The page says "Database connection failed".
+  FIX:     - Make sure MySQL is green in the XAMPP Control Panel.
+           - Make sure you imported database\dqms_db.sql (step 4).
+           - If your MySQL root user has a password, put it in
+             DB_PASS in config\config.php.
+
+  PROBLEM: "Not Found" or "Object not found" in the browser.
+  FIX:     Check the folder name and location. The address must
+           match the folder:  C:\xampp\htdocs\queueease  ->
+           http://localhost/queueease/
+
+  PROBLEM: A blank page or "Fatal error ... str_contains".
+  FIX:     Your PHP is too old. Install a newer XAMPP (PHP 8.0+).
+
+  PROBLEM: Login works but I am logged out after a while.
+  FIX:     This is a security feature: you are logged out after
+           30 minutes without activity. Just log in again.
+
+  PROBLEM: No voice on the live display.
+  FIX:     Click the "Voice off" button once to turn it on, and
+           check that the computer's sound is not muted.
+
+  PROBLEM: I want to start again with fresh data.
+  FIX:     Import database\dqms_db.sql again (and sample_data.sql
+           if you want the example data).
+
+
+---------------------------------------------------------------------
+FOLDERS IN THE PROJECT (for reference)
+---------------------------------------------------------------------
+
+  admin\       administrator pages       customer\  customer pages
+  staff\       staff (counter) pages     public\    live display
+  queue\       guest ticket + data APIs  reports\   reports
+  assets\      CSS, JavaScript, fonts    includes\  shared PHP code
+  config\      settings                  database\  SQL files
+  docs\        test cases, screenshots   tests\     automated tests
+
+  More details: README.md
+=====================================================================
